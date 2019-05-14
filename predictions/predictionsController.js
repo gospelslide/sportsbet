@@ -3,16 +3,17 @@ const db = require('../utils/dbUtils');
 var recordPrediction = function(req, res) {
     var type = req.body.type;
     var entityid = req.body.momid || req.body.teamid;
-    checkIfPredictionExists(type, entityid, function(results) {
+    var matchid = req.body.matchid;
+    checkIfPredictionExists(type, entityid, matchid, function(results) {
         if (results && results.length > 0) {
-            var predictionId = results["id"];
-            insertUserPrediction(req.session.user, predictionId, function(err, results) {
+            insertUserPrediction(req.session.user, results[0]["id"], function(err, results) {
                 if (!err) return res.send("Successfully added your prediction!");
             });
         }
         else {
-            insertPrediction(type, entityid, function(err, results, predictionInsertId) {
-                if (!err && !!insertId) {
+            console.log("should not be printed");
+            insertPrediction(type, entityid, matchid, function(err, results, predictionInsertId) {
+                if (!err && !!predictionInsertId) {
                     insertUserPrediction(req.session.user, predictionInsertId, function(err, results) {
                         if (!err) return res.send("Successfully added your prediction!");
                     });
@@ -22,17 +23,18 @@ var recordPrediction = function(req, res) {
     });
 }
 
-var checkIfPredictionExists = function(type, entityid, callback) {
-    db.queryDb("SELECT * FROM predictions where type = '" + type + "' and entity_id = '" + entityid + "' processed != 1;", 
+var checkIfPredictionExists = function(type, entityid, match_id, callback) {
+    // console.log("SELECT * FROM predictions where type = '" + type + "' and entity_id = " + entityid + " and processed != 1;");
+    db.queryDb("SELECT * FROM predictions where type = '" + type + "' and entity_id = " + entityid + " and match_id = " + match_id, 
     function(err, results) {
         if (err || results.length == 0) return callback(false);
-        return callback(results[0]);
+        return callback(results);
     });
 }
 
-var insertPrediction = function(type, entity, callback) {
+var insertPrediction = function(type, entity, matchid, callback) {
     reward = (type == "mom") ? 500 : 200;
-    db.queryDb(db.prepareInsertQuery("predictions", ["type", "entity_id", "processed", "reward"], [type, entity, 0, reward]), callback);
+    db.queryDb(db.prepareInsertQuery("predictions", ["type", "entity_id", "match_id", "processed", "reward"], [type, entity, matchid, 0, reward]), callback);
 }
 
 var insertUserPrediction = function(userid, predictionid, callback) {
@@ -55,13 +57,16 @@ var getPlayersForMatch = function(req, res) {
         var playerList = JSON.stringify(team1.concat(team2));
         playerList = playerList.replace("[", "(").replace("]", ")");
         var query = "SELECT * FROM players WHERE id in " + playerList;
-        console.log(query);
         db.queryDb(query, function(err, results) {
             console.log(err);
             if (err) return res.send("Failed");
             return res.send(results);
         });
     });
+}
+
+var getAllPredictionsForUser = function(req, res) {
+    db.queryDb("SELECT")
 }
 
 module.exports = {
