@@ -21,8 +21,11 @@ var queryDb = function(q, callback) {
     }
 };
 
-var prepareInsertQuery = function(table, columns, values) {
-    var insert = "INSERT INTO " + table + " (";
+var prepareInsertQuery = function(table, columns, values, ignore) {
+    if (!ignore)
+        var insert = "INSERT INTO " + table + " (";
+    else
+        var insert = "INSERT IGNORE INTO " + table + " (";
     for (var i in columns) {
         insert += (columns[i]);
         if (i < columns.length-1)
@@ -38,7 +41,36 @@ var prepareInsertQuery = function(table, columns, values) {
     return insert;
 }
 
+var prepareBulkInsertQuery = function(table, columns, values, ignore) {
+    if (!ignore)
+        var insert = "INSERT INTO " + table + " (";
+    else
+        var insert = "INSERT IGNORE INTO " + table + " (";
+    for (var i in columns) {
+        insert += (columns[i]);
+        if (i < columns.length-1)
+            insert += ",";
+    }
+    insert += ") VALUES ";
+    for (var row in values) {
+        insert += "("
+        for (var i in values[row]) {
+            insert += ("'" + values[row][i] + "'");
+            if (i < values[row].length-1)
+                insert += ",";
+        }
+        insert += ")";
+        if (row < values.length-1)
+            insert += ", "
+    }
+    insert += ";";
+    return insert;
+}
+
+// console.log(bulkInsert("users", ["username", "password"], [["a", "b"], ["c", "d"], ["d", "e"]], true));
+
 module.exports = {
     queryDb: queryDb,
-    prepareInsertQuery: prepareInsertQuery
+    prepareInsertQuery: prepareInsertQuery,
+    prepareBulkInsertQuery: prepareBulkInsertQuery
 }

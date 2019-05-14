@@ -42,10 +42,15 @@ var registerNewUser = function(req, res) {
     var encPass = sha512(pass, salt).passwordHash;
     db.queryDb(db.prepareInsertQuery("users", ["username", "password", "salt"], [newUser, encPass, salt]), function(err, result) {
         if (err)
-            return res.redirect("/fail");
+            return res.send("User registration failed! Please try again!");
         req.session.user = newUser;
         return res.redirect("/home");
     });
+}
+
+var logoutUser = function(req, res) {
+    delete req.session.user;
+    res.redirect('/');
 }
 
 var isLoggedIn = function(req, res) {
@@ -57,5 +62,6 @@ module.exports = {
     generateRandomString: generateRandomString,
     isLoggedIn: isLoggedIn,
     registerNewUser: registerNewUser,
-    authenticate: authenticate
+    authenticate: authenticate,
+    logoutUser: logoutUser
 }
