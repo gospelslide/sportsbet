@@ -134,7 +134,7 @@ var insertPlayerdata = function(matches, callback) {
 }
 
 var getPlayerObj = function(team, data) {
-    var playing11 = data[team]["squad"];
+    var playing11 = (data[team]["squad"].length == 0) ? data[team]["squad_bench"] : data[team]["squad"];
     var playerData = {};
     if (playing11.length <= 0)
         return playerData;

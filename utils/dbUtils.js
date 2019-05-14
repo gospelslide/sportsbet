@@ -12,8 +12,9 @@ connection.connect();
 var queryDb = function(q, callback) {
     try {
         connection.query(q, function(err, results){
+            if (typeof callback !== "function") return;
             if (err) callback(err, false);
-            else callback(false, results);
+            else callback(false, results, results.insertId);
         });
     }
     catch (e) {

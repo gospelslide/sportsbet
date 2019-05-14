@@ -20,12 +20,12 @@ var sha512 = function(password, salt) {
 var authenticate = function(req, res) {
     var user = req.body.username;
     var password = req.body.password;
-    db.queryDb("SELECT username, password, salt FROM users WHERE username = " + "'" + user + "'", function(err, results){
+    db.queryDb("SELECT id, username, password, salt FROM users WHERE username = " + "'" + user + "'", function(err, results){
         if (err || results.length == 0) res.redirect('/');
         else {
             var encPass = sha512(password, results[0]['salt'])['passwordHash'];
             if (encPass == results[0]['password']) {
-                req.session.user = user;
+                req.session.user = results[0]['id'];
                 return res.redirect("/home");
             }
             else {
@@ -40,10 +40,10 @@ var registerNewUser = function(req, res) {
     var pass = req.body.password;
     var salt = generateRandomString(10);
     var encPass = sha512(pass, salt).passwordHash;
-    db.queryDb(db.prepareInsertQuery("users", ["username", "password", "salt"], [newUser, encPass, salt]), function(err, result) {
+    db.queryDb(db.prepareInsertQuery("users", ["username", "password", "salt"], [newUser, encPass, salt]), function(err, result, autoId) {
         if (err)
             return res.send("User registration failed! Please try again!");
-        req.session.user = newUser;
+        req.session.user = autoId;
         return res.redirect("/home");
     });
 }
@@ -53,9 +53,9 @@ var logoutUser = function(req, res) {
     res.redirect('/');
 }
 
-var isLoggedIn = function(req, res) {
-    if (!req.session.user) return false;
-    else return true;
+var isLoggedIn = function(req, res, next) {
+    if (!req.session.user) return res.redirect('/auth/login');
+    else return next();
 }
 
 module.exports = {
