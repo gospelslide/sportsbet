@@ -1,0 +1,477 @@
+{
+    "matches": {
+      "22618": {
+        "match_index": 3,
+        "id": "22618",
+        "series": {
+          "id": "2833",
+          "name": "Saurashtra Premier League 2019",
+          "short_name": "SPL 2019",
+          "type": "",
+          "tour": true,
+          "start_date": "1557705600",
+          "end_date": "1558569600",
+          "category": "League",
+          "seriesType": ""
+        },
+        "start_time": "1557842400",
+        "timeForNextDay": "false",
+        "end_time": "1557855000",
+        "exp_end_time": "1557855000",
+        "state": "mom",
+        "dn": true,
+        "winning_team_id": 999,
+        "winningmargin": "24 Runs",
+        "match_desc": "1st Match",
+        "mom": [
+          103
+        ],
+        "type": "T20",
+        "live_coverage": true,
+        "minor_series": false,
+        "state_title": "TIT Won",
+        "status": "Tit Heroes won by 24 runs",
+        "venue": {
+          "id": "290",
+          "name": "Saurashtra Cricket Association Stadium",
+          "city": "Rajkot",
+          "country": "India",
+          "location": "Rajkot, India",
+          "timezone": "+05:30",
+          "latitude": "22.289721",
+          "longitude": "70.793182"
+        },
+        "score": {
+          "batting": {
+            "id": "590",
+            "score": "123/7 (20.0 Ovs)",
+            "innings": [
+              {
+                "id": "2",
+                "score": "123",
+                "wkts": "7",
+                "overs": "20"
+              }
+            ]
+          },
+          "bowling": {
+            "id": "588",
+            "score": "147/7 (20.0 Ovs)",
+            "innings": [
+              {
+                "id": "1",
+                "score": "147",
+                "wkts": "7",
+                "overs": "20"
+              }
+            ]
+          },
+          "batsman": [
+            {
+              "id": "14884",
+              "strike": "1",
+              "r": "18",
+              "b": "11",
+              "4s": "1",
+              "6s": "1"
+            }
+          ],
+          "bowler": [
+            {
+              "id": "14876",
+              "o": "3",
+              "m": "0",
+              "r": "31",
+              "w": "0"
+            },
+            {
+              "id": "14867",
+              "o": "3",
+              "m": "0",
+              "r": "25",
+              "w": "1"
+            }
+          ],
+          "crr": "6.15",
+          "partnership": {},
+          "prev_overs": " . W . 1 . . | Wd 2 4 1 1 1 2 | 1 . 1 1 . W ",
+          "target": "148"
+        },
+        "official": {
+          "umpire1": {
+            "id": "6851",
+            "name": "Amiesh Saheba",
+            "country": "IND"
+          },
+          "umpire2": {
+            "id": "8908",
+            "name": "Piyush Khakhar",
+            "country": "IND"
+          }
+        },
+        "toss": {
+          "winner": "Halar Heroes",
+          "decision": "Batting"
+        },
+        "commlinesCount": "50 Comm",
+        "team1": {
+          "id": "588",
+          "name": "Halar Heroes",
+          "s_name": "HHS",
+          "round_flag": "default.png",
+          "square_flag": "default.png",
+          "squad": [
+            12088,
+            14868,
+            8850,
+            14872,
+            14869,
+            14870,
+            14876,
+            14871,
+            14867,
+            13493,
+            14866
+          ],
+          "squad_bench": [
+            14874,
+            14879,
+            14877,
+            14873,
+            14878,
+            14875
+          ]
+        },
+        "team2": {
+          "id": "590",
+          "name": "Kutch Warriors",
+          "s_name": "KUTW",
+          "round_flag": "default.png",
+          "square_flag": "default.png",
+          "squad": [
+            10221,
+            10901,
+            14881,
+            9639,
+            14882,
+            10330,
+            8282,
+            14880,
+            14884,
+            6327,
+            12644
+          ],
+          "squad_bench": [
+            14883,
+            14888,
+            14885,
+            9032,
+            14886,
+            14887
+          ]
+        },
+        "players": [
+          {
+            "id": "12088",
+            "f_name": "Harvik Desai",
+            "name": "Harvik Desai",
+            "bat_style": "RIGHT",
+            "speciality": "WK-Batsman",
+            "role": "(wk)",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14868",
+            "f_name": "Aezaz Kothariya",
+            "name": "Aezaz Kothariya",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm medium",
+            "speciality": "Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "8850",
+            "f_name": "Aarpit Vasavada",
+            "name": "Vasavada",
+            "bat_style": "LEFT",
+            "bowl_style": "Left Arm orthodox",
+            "speciality": "Batsman",
+            "role": "(c)",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14872",
+            "f_name": "Harsh Anghan",
+            "name": "Harsh Anghan",
+            "bat_style": "RIGHT",
+            "speciality": "Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14869",
+            "f_name": "Krunal Karamchandani",
+            "name": "Karamchandani",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm off break",
+            "speciality": "Batting Allrounder",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14870",
+            "f_name": "Parth Chauhan",
+            "name": "Parth Chauhan",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm fast medium",
+            "speciality": "Bowling Allrounder",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14876",
+            "f_name": "Kuldeep Sharma",
+            "name": "Kuldeep Sharma",
+            "bat_style": "LEFT",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14871",
+            "f_name": "Dev Dand",
+            "name": "Dev Dand",
+            "bat_style": "LEFT",
+            "bowl_style": "Left Arm orthodox",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14867",
+            "f_name": "Pranav Nandha",
+            "name": "Pranav Nandha",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm medium",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "13493",
+            "f_name": "Vishvaraj Jadeja",
+            "name": "Vishvaraj Jadeja",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm medium",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14866",
+            "f_name": "Vivek Agath",
+            "name": "Vivek Agath",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm medium",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14874",
+            "f_name": "Yash Parekh",
+            "name": "Yash Parekh",
+            "bat_style": "RIGHT",
+            "speciality": "WK-Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14879",
+            "f_name": "Devendra Poriya",
+            "name": "Devendra Poriya",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm medium",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14877",
+            "f_name": "Jyortir Purohit",
+            "name": "Jyortir Purohit",
+            "bat_style": "RIGHT",
+            "speciality": "Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14873",
+            "f_name": "Brijesh Lakadiya",
+            "name": "Brijesh Lakadiya",
+            "bat_style": "LEFT",
+            "bowl_style": "Left Arm orthodox",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14878",
+            "f_name": "Smit Desai",
+            "name": "Smit Desai",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm off break",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14875",
+            "f_name": "Pranav Savjani",
+            "name": "Pranav Savjani",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm fast medium",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "10221",
+            "f_name": "Pruthvipal Solanki",
+            "name": "Pruthvipal Solanki",
+            "bat_style": "LEFT",
+            "bowl_style": "Right Arm leg break",
+            "speciality": "Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "10901",
+            "f_name": "Rajdeep Darbar",
+            "name": "Rajdeep Darbar",
+            "bat_style": "RIGHT",
+            "speciality": "WK-Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14881",
+            "f_name": "Sahil Karathia",
+            "name": "Sahil Karathia",
+            "bat_style": "RIGHT",
+            "speciality": "Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "9639",
+            "f_name": "Avi Barot",
+            "name": "Barot",
+            "bat_style": "RIGHT",
+            "speciality": "Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14882",
+            "f_name": "Suresh Padiyachi",
+            "name": "Suresh Padiyachi",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm fast medium",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "10330",
+            "f_name": "Snell Patel",
+            "name": "Snell Patel",
+            "bat_style": "RIGHT",
+            "speciality": "WK-Batsman",
+            "role": "(wk)",
+            "image": "default.jpg"
+          },
+          {
+            "id": "8282",
+            "f_name": "Kuldeep Raval",
+            "name": "Kuldeep Raval",
+            "bat_style": "LEFT",
+            "bowl_style": "Left Arm orthodox",
+            "speciality": "Batting Allrounder",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14880",
+            "f_name": "Parth Bhut",
+            "name": "Parth Bhut",
+            "bat_style": "LEFT",
+            "bowl_style": "Left Arm orthodox",
+            "speciality": "Bowling Allrounder",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14884",
+            "f_name": "Hitendra Jadeja",
+            "name": "Hitendra Jadeja",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm fast medium",
+            "speciality": "Bowling Allrounder",
+            "image": "default.jpg"
+          },
+          {
+            "id": "6327",
+            "f_name": "Jaydev Unadkat",
+            "name": "Unadkat",
+            "bat_style": "RIGHT",
+            "bowl_style": "Left Arm fast medium",
+            "speciality": "Bowler",
+            "role": "(c)",
+            "image": "default.jpg"
+          },
+          {
+            "id": "12644",
+            "f_name": "Agnivesh Ayachi",
+            "name": "Agnivesh Ayachi",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm medium",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14883",
+            "f_name": "Amit Ranjan",
+            "name": "Amit Ranjan",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm medium",
+            "speciality": "Batting Allrounder",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14888",
+            "f_name": "Saurish Chakraborty",
+            "name": "Saurish",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm medium",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14885",
+            "f_name": "Harmesh Somaiya",
+            "name": "Harmesh Somaiya",
+            "bat_style": "RIGHT",
+            "speciality": "WK-Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "9032",
+            "f_name": "Rahul Rajendra Dave",
+            "name": "Rahul Dave",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm off break",
+            "speciality": "Batsman",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14886",
+            "f_name": "Fenil Soni",
+            "name": "Fenil Soni",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm off break",
+            "speciality": "Batting Allrounder",
+            "image": "default.jpg"
+          },
+          {
+            "id": "14887",
+            "f_name": "Vaibhav Goswami",
+            "name": "Vaibhav",
+            "bat_style": "RIGHT",
+            "bowl_style": "Right Arm leg break",
+            "speciality": "Bowler",
+            "image": "default.jpg"
+          }
+        ]
+      }
+    }
+  }
