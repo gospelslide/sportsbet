@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  </head>
+<body>
+
+<h2>Predict the winning team!</h2>
+<h3 id="matchname"> </h3>
+
+<form action="/predict/recordPrediction" method="POST" >
+  Predict the winning team:<br>
+  <select name="teamid" id="teamList"></select>
+  <input type="hidden" name="matchid" id="matchid">
+  <input type="hidden" name="type" id="type">
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<script>
+var url = new URL(window.location.href);
+var c = url.searchParams.get("matchid");
+document.getElementById("matchid").value = c;
+document.getElementById("type").value = "team";
+
+$.get("/predict/teams?matchid=" + c, function(data) {
+  data = JSON.parse(data);
+  document.getElementById("matchname").innerHTML = data["team1_name"] + " vs " + data["team2_name"];
+  var select = document.getElementById("teamList");
+  var option1 = document.createElement("option");
+  option1.text = data["team1_name"];
+  option1.value = data["team1_id"];
+  var option2 = document.createElement("option");
+  option2.text = data["team2_name"];
+  option2.value = data["team2_id"];
+  select.add(option1);
+  select.add(option2);
+});
+</script>
+</body>
+</html>

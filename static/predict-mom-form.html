@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  </head>
+<body>
+
+<h2>Predict the man of the match!</h2>
+<h3 id="matchname"> </h3>
+
+<form action="/predict/recordPrediction" method="POST" >
+  Predict man of the match:<br>
+  <select name="momid" id="playerList"></select>
+  <input type="hidden" name="matchid" id="matchid">
+  <input type="hidden" name="type" id="type">
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+<script>
+var url = new URL(window.location.href);
+var c = url.searchParams.get("matchid");
+document.getElementById("matchid").value = c;
+document.getElementById("type").value = "mom";
+
+$.get("/predict/teams?matchid=" + c, function(data) {
+  data = JSON.parse(data);
+  document.getElementById("matchname").innerHTML = data["team1_name"] + " vs " + data["team2_name"];
+});
+
+$.get("/predict/players?matchid=" + c, function(data) {
+//   data = JSON.parse(data);
+  var select = document.getElementById("playerList");
+  for (var i in data) {
+      var option = document.createElement("option");
+      option.text = data[i]["name"];
+      option.value = data[i]["id"];
+      select.add(option);
+  }
+});
+</script>
+</body>
+</html>

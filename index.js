@@ -10,7 +10,7 @@ app.use(session({secret: "lulz"}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/auth', require('./auth/authRouter'));
 app.use('/home', auth.isLoggedIn, require('./home/homeRouter'));
-app.use('/predict', require('./predictions/predictionsRouter'));
+app.use('/predict', auth.isLoggedIn, require('./predictions/predictionsRouter'));
 app.use('/', function(req, res) {
     return res.send("<h2>Welcome to Sportsbet!</h2>");
 });
