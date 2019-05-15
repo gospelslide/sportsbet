@@ -16,5 +16,4 @@ router.get('/logout', controller.logoutUser);
 router.post('/register', controller.registerNewUser);
 router.post('/authenticate', controller.authenticate);
 
-//export this router to use in our index.js
 module.exports = router;
