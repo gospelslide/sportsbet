@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Matches</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+        <h2>History</h2>
+        <table class="table table-hover" id="non-bettable">
+            <thead>
+            <tr>
+                <th>Match</th>
+                <th>Teams</th>
+                <th>Status</th>
+                <th>Start</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+            </tr>
+
+            <tr>
+                <td>Mary</td>
+                <td>Moe</td>
+                <td>mary@example.com</td>
+            </tr>
+            <tr>
+                <td>July</td>
+                <td>Dooley</td>
+                <td>july@example.com</td>
+            </tr> -->
+            </tbody>
+        </table>
+        </div>
+
+<div class="container">
+  <h2>Upcoming matches</h2>
+  <p>Bet for these matches now!</p>            
+  <table class="table table-hover" id="bettable">
+    <thead>
+      <tr>
+        <th>Match</th>
+        <th>Teams</th>
+        <th>Status</th>
+        <th>Start</th>
+        <th>Bet Now!</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+<script>
+    $.get("/home/getMatchData", function(data) {
+        data = JSON.parse(data);
+        for (var id in data) {
+            var currmatch = data[id];
+            if (currmatch["bettable"] != 1) {
+                var match = currmatch["description"] + "<br>" + currmatch["series"];
+                var teams = currmatch["team1"]["name"] + " vs " + currmatch["team2"]["name"];
+                if (currmatch["result"].length > 0) {
+                    var result = currmatch["result"];
+                    if (!!currmatch["mom_player_id"]) {
+                        var mom = currmatch["team1"]["players"].hasOwnProperty(currmatch["mom_player_id"]) ? currmatch["team1"]["players"][currmatch["mom_player_id"]] : currmatch["team2"]["players"][currmatch["mom_player_id"]];
+                        result += ("<br> Man of the match was " + mom);
+                    }
+                }
+                else {
+                    var result = currmatch["state"];
+                }
+                var utcSeconds = parseInt(currmatch["start"]);
+                var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+                d.setUTCSeconds(utcSeconds);
+                var start = d.toString();
+                start = start.substr(0, start.indexOf("GMT"));
+                var markup = "<tr><td>" + match + "</td><td>" + teams + "</td><td>" + result + "</td><td>" + start + "</td></tr>";
+                $("#non-bettable").append(markup);
+            }
+            else {
+                var match = currmatch["description"] + "<br>" + currmatch["series"];
+                var teams = currmatch["team1"]["name"] + " vs " + currmatch["team2"]["name"];
+                var status = currmatch["state"];
+                var utcSeconds = parseInt(currmatch["start"]);
+                var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+                d.setUTCSeconds(utcSeconds);
+                var start = d.toString();
+                start = start.substr(0, start.indexOf("GMT"));
+                var teamhref = "/predict/teamPredict?matchid=" + currmatch["id"];
+                var momhref = "/predict/playerPredict?matchid=" + currmatch["id"];
+                var betnow = "<a href=\"" + teamhref + "\"> Predict winning team</a><br>" +
+                "<a href=\"" + momhref + "\"> Predict man of the match</a>";
+                var markup = "<tr><td>" + match + "</td><td>" + teams + "</td><td>" + status + "</td><td>" + start + "</td><td>" + betnow + "</td></tr>";
+                $("#bettable").append(markup);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

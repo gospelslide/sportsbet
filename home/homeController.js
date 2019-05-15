@@ -2,27 +2,38 @@ const http = require('http');
 const request = require('request');
 const db = require('../utils/dbUtils');
 const api = "https://www.cricbuzz.com/match-api/livematches.json";
+const redis = require('../utils/redisUtils');
 var matches = {};
 
 
-var getData = function(callback) {
+var getData = function(callback, invalidate) {
     var d = new Date().getHours();
-    request(api + "?day=" + d, function(err, response, body) {
-        var matchData = structureData(JSON.parse(body)["matches"]);
-        var dbInsertTasks = [];
-        dbInsertTasks.push(new Promise(function(resolve, reject){
-            insertMatchData(matchData, resolve);
-        }));
-        dbInsertTasks.push(new Promise(function(resolve, reject){
-            insertTeamData(matchData, resolve);
-        }));
-        dbInsertTasks.push(new Promise(function(resolve, reject){
-            insertPlayerdata(JSON.parse(body)["matches"], resolve);
-        }));
-        Promise.all(dbInsertTasks).then(function(values){
-            console.log("All insertion tasks complete!");
-            callback(matchData);
-        })
+    redis.getRedisKey("matchData", function(err, value) {
+        if (!err && !!value && !invalidate) {
+            console.log("Serving from redis!!");
+            return callback(JSON.parse(value));
+        }
+        var rand = Math.floor(Math.random() * Math.floor(1000));
+        request(api + "?rand=" + rand, function(err, response, body) {
+            console.log("Cache invalid, requesting match data");
+            var matchData = structureData(JSON.parse(body)["matches"]);
+            var dbInsertTasks = [];
+            dbInsertTasks.push(new Promise(function(resolve, reject){
+                insertMatchData(matchData, resolve);
+            }));
+            dbInsertTasks.push(new Promise(function(resolve, reject){
+                insertTeamData(matchData, resolve);
+            }));
+            dbInsertTasks.push(new Promise(function(resolve, reject){
+                insertPlayerdata(JSON.parse(body)["matches"], resolve);
+            }));
+            Promise.all(dbInsertTasks).then(function(values){
+                console.log("All insertion tasks complete!");
+                redis.setRedisKey("matchData", JSON.stringify(matchData), 1*60*60*1000, function() {
+                    callback(matchData);
+                });
+            })
+        });
     });
 }
 
@@ -43,7 +54,7 @@ var structureData = function(matchData) {
         currmatch["team2"]["name"] = matchData[id]["team2"]["name"];
         currmatch["team2"]["players"] = getPlayerObj("team2", matchData[id]);
         currmatch["winning_team_id"] = matchData[id]["winning_team_id"] || "";
-        currmatch["state"] = matchData[id]["state"];
+        currmatch["state"] = matchData[id]["state_title"];
         currmatch["result"] = matchData[id]["status"];
         currmatch["mom_player_id"] = (matchData[id].hasOwnProperty("mom")) ? matchData[id]["mom"][0] : "";
         var currentTime = (new Date).getTime();
