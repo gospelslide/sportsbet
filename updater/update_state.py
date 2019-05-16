@@ -42,8 +42,9 @@ senderemail = "sportsbetzomato@gmail.com"
 
 for matchid in redis_data:
     new_match_data[matchid] = redis_data[matchid]
-    if redis_data[matchid]["bettable"] == 1 or matchid not in match_raw_data:
+    if matchid not in match_raw_data:
         continue
+    print "Processing matchid - ", str(matchid)
     currmatch = redis_data[matchid]
     sql = "UPDATE matches set "
     updateclause = ""
@@ -69,7 +70,7 @@ for matchid in redis_data:
                 if results:
                     pred_id = results["id"]
                     pred_reward = results["reward"]
-                    print str(pred_id), " reward-", str(pred_reward)
+                    print "Prediction id-", str(pred_id), " reward-", str(pred_reward)
 
                     cursor.execute("UPDATE predictions SET processed = 1, correct = 1 WHERE id = %d" % (pred_id))
                     dbconnection.commit()
@@ -91,9 +92,11 @@ for matchid in redis_data:
 
                         for user in users:
                             receiveremail = user["username"]
-                            message = " Subject: You predicted correct! \n\n \
-                            Congratulations! You won " + str(pred_reward) + " reward points!\n \
-                                Your " + str(type_pred) +  " prediction for the " + currmatch["team1"]["name"] + " vs " + currmatch["team2"]["name"] + " was correct!"
+                            message = """Subject: You predicted correct!
+
+
+                                        Congratulations! You won """ + str(pred_reward) + """ reward points! \
+                                        Your """ + str(type_pred) +  """ prediction for the """ + currmatch["team1"]["name"] + """ vs """ + currmatch["team2"]["name"] + """ was correct!"""
                             server.sendmail(senderemail, receiveremail, message)
                 
 
@@ -104,7 +107,7 @@ for matchid in redis_data:
         print sql
         cursor.execute(sql)
         dbconnection.commit()
-        result = cursor.fetchall()
+        print "Rows updated-" + str(cursor.rowcount)
 
 new_match_data = json.dumps(new_match_data, separators=(',', ':'))
 rclient.set("matchData", new_match_data)

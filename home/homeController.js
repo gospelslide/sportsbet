@@ -61,7 +61,7 @@ var structureData = function(matchData) {
         currmatch["result"] = matchData[id]["status"];
         currmatch["mom_player_id"] = (matchData[id].hasOwnProperty("mom")) ? matchData[id]["mom"][0] : "";
         var currentTime = (new Date).getTime();
-        if (currmatch["end"] >= currentTime || (currmatch["start"] - currentTime > 30*60) || currmatch["result"].length > 0)
+        if (currmatch["end"] >= currentTime || currmatch["start"] >= currentTime || currmatch["result"].length > 0)
             currmatch["bettable"] = 0;
         else
             currmatch["bettable"] = 1;

@@ -38,10 +38,10 @@
     }
 
     $.get("/user/history", function(data) {
-        document.getElementById("tot_rewards").innerHTML = (!data.length) ? 0 : data[0]["total_rewards"];
         var predictions = data["predictions"];
         var teams_lookup = data["teams"];
         var players = data["players"];
+        document.getElementById("tot_rewards").innerHTML = (typeof predictions === "undefined" || !predictions.length) ? "0" : predictions[0]["total_rewards"];
 
         for (var i in predictions) {
             var currPrediction = predictions[i];
