@@ -25,6 +25,24 @@
 </nav>
 
 <div class="container">
+        <h2>Upcoming matches</h2>
+        <p>Bet for these matches now!</p>            
+        <table class="table table-hover" id="bettable">
+          <thead>
+            <tr>
+              <th>Match</th>
+              <th>Teams</th>
+              <th>Status</th>
+              <th>Start</th>
+              <th>Bet Now!</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+<div class="container">
         <h2>History</h2>
         <table class="table table-hover" id="non-bettable">
             <thead>
@@ -55,24 +73,6 @@
             </tbody>
         </table>
         </div>
-
-<div class="container">
-  <h2>Upcoming matches</h2>
-  <p>Bet for these matches now!</p>            
-  <table class="table table-hover" id="bettable">
-    <thead>
-      <tr>
-        <th>Match</th>
-        <th>Teams</th>
-        <th>Status</th>
-        <th>Start</th>
-        <th>Bet Now!</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-</div>
 
 <script>
     $.get("/home/getMatchData", function(data) {
