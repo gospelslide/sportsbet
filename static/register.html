@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <title>Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
 <body>
 
-<h2>Register for Sportsbet</h2>
-
-<form action="/auth/register" method="POST" >
-  Email:<br>
-  <input type="text" name="username" placeholder="Enter your email">
-  <br>
-  Password:<br>
-  <input type="password" name="password" placeholder="Set a password">
-  <br><br>
-  <input type="submit" value="Submit">
-</form> 
-
-<p>Register for Sportsbet now!</p>
+<div class="container">
+  <h2>Sign up for Sportsbet</h2>
+  <form action="/auth/register" method="POST">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="username">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Set your password" name="password">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
 
 </body>
 </html>

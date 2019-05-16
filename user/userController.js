@@ -18,7 +18,8 @@ var getPredictionHistoryForUser = function(req, res) {
         for (var i in results) {
             teams.push(results[i]["team1_id"]);
             teams.push(results[i]["team2_id"]);
-            moms.push(results[i]["mom_player_id"]);
+            if (!!results[i]["mom_player_id"])
+                moms.push(results[i]["mom_player_id"]);
             if (results[i]["type"] == "mom")
                 moms.push(results[i]["entity_id"]);
         }

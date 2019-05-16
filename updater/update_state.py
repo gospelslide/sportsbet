@@ -5,8 +5,15 @@ import pymysql
 import json
 import os
 import smtplib
+import calendar
+import time
 
+ts = calendar.timegm(time.gmtime())
 rclient = redis.Redis(host='localhost', port=6379)
+dbconnection = pymysql.connect(host='localhost', user='root', password='zomato@2019', db='sportsbet', cursorclass=pymysql.cursors.DictCursor)
+cursor = dbconnection.cursor()
+cursor.execute("SELECT * FROM matches WHERE ")
+
 # api_endpoint = "https://www.cricbuzz.com/match-api/livematches.json"
 # api_endpoint += ("?rand=" + str(random.randint(1,1000)))
 # response = requests.get(api_endpoint)
@@ -15,7 +22,6 @@ rclient = redis.Redis(host='localhost', port=6379)
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 match_raw_data = json.loads(open(dir_path + "/sample.json", "r").read())["matches"]
-# print match_raw_data
 
 def get_from_request_data(data, field):
     if field == "mom_player_id":
@@ -29,16 +35,13 @@ def get_from_request_data(data, field):
     else:
         return data[field]
 
-# if rclient.get("matchDataRaw") != str(response.text):
-dbconnection = pymysql.connect(host='localhost', user='root', password='zomato@2019', db='sportsbet', cursorclass=pymysql.cursors.DictCursor)
-cursor = dbconnection.cursor()
 update_fields = ["mom_player_id", "winning_team_id", "state", "result"]
 redis_data = json.loads(rclient.get("matchData"))
 new_match_data = dict()
 server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-server.login("sportsbetzomato", "zomato@2019")
+server.login("sportsbetzomato1@gmail.com", "zomato@2019")
 
-senderemail = "sportsbetzomato@gmail.com"
+senderemail = "sportsbetzomato1@gmail.com"
 
 for matchid in redis_data:
     new_match_data[matchid] = redis_data[matchid]

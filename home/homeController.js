@@ -27,9 +27,6 @@ var getData = function(callback, invalidate) {
             dbInsertTasks.push(new Promise(function(resolve, reject){
                 insertPlayerdata(JSON.parse(body)["matches"], resolve);
             }));
-            dbInsertTasks.push(new Promise(function(resolve, reject){
-                redis.setRedisKey("matchDataRaw", body, 1*60*60*1000, resolve);
-            }));
             Promise.all(dbInsertTasks).then(function(values){
                 console.log("All insertion tasks complete!");
                 redis.setRedisKey("matchData", JSON.stringify(matchData), 1*60*60*1000, function() {
