@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Prediction history</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+        <h2>Prediction History</h2>
+        <h3>Total rewards earned</h3>
+        <h3 id="tot_rewards"></h3>
+        <table class="table table-hover" id="non-bettable">
+            <thead>
+            <tr>
+                <th>Match</th>
+                <th>Teams</th>
+                <th>Status</th>
+                <th>Your Prediction</th>
+                <th>Reward points received</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </div>
+
+<script>
+    function getMatchResult(players, data) {
+        var result = data["result"];
+        var mom = players[data["mom_player_id"]];
+        result += ("<br> Man of the match was " + mom);
+        return result;
+    }
+
+    $.get("/user/history", function(data) {
+        document.getElementById("tot_rewards").innerHTML = (!data.length) ? 0 : data[0]["total_rewards"];
+        var predictions = data["predictions"];
+        var teams_lookup = data["teams"];
+        var players = data["players"];
+
+        for (var i in predictions) {
+            var currPrediction = predictions[i];
+            var match = currPrediction["description"] + "<br>" + currPrediction["series"];
+            var teams = teams_lookup[currPrediction["team1_id"]] + "<br>" + teams_lookup[currPrediction["team2_id"]];
+            var status = (!currPrediction["result"] && currPrediction["processed"] == "0") ? "Pending" : getMatchResult(players, currPrediction);
+            var prediction = (currPrediction["type"] === "mom") ? "Man of the match will be " + players[currPrediction["entity_id"]] : teams_lookup[currPrediction["entity_id"]] + " will win the match";
+            var rewardPoints = (currPrediction["processed"] == "1" && currPrediction["correct"] == "1") ? currPrediction["reward"] : "0";
+            var markup = "<tr><td>" + match + "</td><td>" + teams + "</td><td>" + status + "</td><td>" + prediction + "</td><td>" + rewardPoints + "</td></tr>";
+            $("#non-bettable").append(markup);
+        }
+    });
+</script>
+
+</body>
+</html>
