@@ -8,6 +8,9 @@ router.get('/predictionHistory', function(req, res) {
     return res.sendFile(fileUtil.getStaticFilePath('user_history.html'));
 });
 router.get('/history', controller.getPredictionHistoryForUser);
-router.get('/leaderboard', controller.getAllTimeLeaderboard);
+router.get('/leaderboard', function(req, res){
+    return res.sendFile(fileUtil.getStaticFilePath('leaderboard.html'));
+});
+router.get('/get_leaderboard', controller.getAllTimeLeaderboard);
 
 module.exports = router;
