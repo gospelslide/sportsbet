@@ -7,12 +7,23 @@ import os
 import smtplib
 import calendar
 import time
+import sys
+import logging
 
 ts = calendar.timegm(time.gmtime())
+
 rclient = redis.Redis(host='localhost', port=6379)
 dbconnection = pymysql.connect(host='localhost', user='root', password='zomato@2019', db='sportsbet', cursorclass=pymysql.cursors.DictCursor)
 cursor = dbconnection.cursor()
-cursor.execute("SELECT * FROM matches WHERE ")
+
+cursor.execute("SELECT * FROM matches WHERE " + str(ts) + "-end BETWEEN 0 AND 600;")
+results = cursor.fetchall()
+
+logging.basicConfig(filename="updater.log", format='%(asctime)s: %(name)s - %(levelname)s - %(message)s', \
+                    level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
+logging.info("Matches completed-" + str(len(results)))
+if len(results) == 0:
+    sys.exit()
 
 # api_endpoint = "https://www.cricbuzz.com/match-api/livematches.json"
 # api_endpoint += ("?rand=" + str(random.randint(1,1000)))
@@ -47,7 +58,7 @@ for matchid in redis_data:
     new_match_data[matchid] = redis_data[matchid]
     if matchid not in match_raw_data:
         continue
-    print "Processing matchid - ", str(matchid)
+    logging.info("Processing matchid - " + str(matchid))
     currmatch = redis_data[matchid]
     sql = "UPDATE matches set "
     updateclause = ""
@@ -57,7 +68,7 @@ for matchid in redis_data:
         cache_value = currmatch[field]
         req_value = get_from_request_data(match_raw_data[matchid], field)
         if cache_value != req_value:
-            print cache_value, "->", req_value
+            logging.info(cache_value + "->" + str(req_value))
             new_match_data[matchid][field] = req_value
             updateclause += (field + " = '" + str(req_value) + "',")
 
@@ -73,7 +84,7 @@ for matchid in redis_data:
                 if results:
                     pred_id = results["id"]
                     pred_reward = results["reward"]
-                    print "Prediction id-", str(pred_id), " reward-", str(pred_reward)
+                    logging.info("Prediction id-" + str(pred_id) + " reward-" + str(pred_reward))
 
                     cursor.execute("UPDATE predictions SET processed = 1, correct = 1 WHERE id = %d" % (pred_id))
                     dbconnection.commit()
@@ -88,7 +99,7 @@ for matchid in redis_data:
 
                         user_ids_str = ",".join(user_ids)
                         user_ids_str = "(" + user_ids_str + ")"
-                        print "userids-" + user_ids_str
+                        logging.info("userids-" + user_ids_str)
 
                         cursor.execute("UPDATE users SET rewards = rewards + %d WHERE id in %s" % (pred_reward, user_ids_str))
                         dbconnection.commit()
@@ -107,10 +118,10 @@ for matchid in redis_data:
     if len(updateclause) > 0:
         updateclause = updateclause.rstrip(",")
         sql = sql + updateclause + whereclause
-        print sql
+        logging.info(sql)
         cursor.execute(sql)
         dbconnection.commit()
-        print "Rows updated-" + str(cursor.rowcount)
+        logging.info("Rows updated-" + str(cursor.rowcount))
 
 new_match_data = json.dumps(new_match_data, separators=(',', ':'))
 rclient.set("matchData", new_match_data)
