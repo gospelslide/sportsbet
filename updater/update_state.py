@@ -25,14 +25,21 @@ logging.info("Matches completed-" + str(len(results)))
 if len(results) == 0:
     sys.exit()
 
+
+#################################### Uncomment this code to fetch live data ######################################################
 # api_endpoint = "https://www.cricbuzz.com/match-api/livematches.json"
 # api_endpoint += ("?rand=" + str(random.randint(1,1000)))
 # response = requests.get(api_endpoint)
 # match_raw_data = json.loads(response.text)
 # match_raw_data = match_raw_data["matches"]
+##################################################################################################################################
 
+
+#################################### Code to simulate a match result from sample.json ############################################
 dir_path = os.path.dirname(os.path.realpath(__file__))
 match_raw_data = json.loads(open(dir_path + "/sample.json", "r").read())["matches"]
+##################################################################################################################################
+
 
 def get_from_request_data(data, field):
     if field == "mom_player_id":
